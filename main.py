@@ -83,7 +83,7 @@ class point:
     b = (500,250)
 
     def __init__(self):
-        self.angle = 0  # radians
+        self.angle = 0  # degrees
         self.len = 250  # makes it easier to reference
         self.pos = self.getPos()   # calculated Pos
         self.speed = 1
@@ -117,11 +117,11 @@ class point:
         # Cos(c) = (a^2 + b^2 -  c^2) / 2*(a*b)
         # c = cos-1(a^2 + b^2 -  c^2) / 2*(a*b)
     
-        # ab is window x to x + size
+        # ab is window x to x + size (0-500)
         ab = 500    # c
-        # pythag
-        ac = pythag(point.a,c)    # b
-        bc = pythag(point.b,c)    # a
+        # pythag for line lengths
+        ac = pythag(point.a,c)
+        bc = pythag(point.b,c)
         
         # letters are opposite sides in equation
         # c = cos-1(bc^2 + ac^2 -  ab^2) / 2*(bc*ac)
@@ -134,9 +134,9 @@ class point:
         # print(math.degrees(acbAngle))
 
         # end pt - start pt
-
+           
+        # Draw Right angle polygon
         scalar = 0.2
-
         middle = (((point.b[0] - self.pos[0]) + (point.a[0] - self.pos[0])),(point.b[1] - self.pos[1]) + (point.a[1] - self.pos[1])) 
 
         polypoints = (
@@ -175,6 +175,7 @@ class point:
         pygame.draw.line(window,(255,255,255),self.pos,(250,250),5)
 
     # Draw angle, point and connecting lines to make right angle
+    # (draw had more method calls, but turned into 1 big method, so can be refactored)
     def Draw(self):
         self.DrawRightAngle()
 
@@ -199,6 +200,7 @@ def Draw():
     pygame.draw.circle(window,(66, 228, 73),Circlepos,250,5)
     pygame.draw.circle(window,(255, 0, 171),player.pos,5)
 
+# async for pygbag
 async def main():
     gaming = True
     focused = True
@@ -221,6 +223,6 @@ async def main():
                 else:
                     focused = False
         clock.tick(60)  # Limit the frame rate to 60 FPS
-        await asyncio.sleep(0) 
+        await asyncio.sleep(0) # for pygbag
 
 asyncio.run(main())
